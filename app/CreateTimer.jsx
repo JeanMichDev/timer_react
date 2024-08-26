@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, memo } from "react";
 import { updateDisplay } from "./functions/updateDisplay";
 import { AddBtn } from "./AddBtn";
 import { Trash2 } from "lucide-react";
@@ -24,7 +24,13 @@ export const CreateTimer = ({ hours, minutes, seconds, onDelete }) => {
   const totalSeconds = getTotalSeconds(hours, minutes, seconds);
   const onePointProgress = 100 / totalSeconds;
 
-  const endTime = new Date(new Date().getTime() + totalSeconds * 1000);
+  const endTimeRef = useRef(
+    new Date(new Date().getTime() + totalSeconds * 1000)
+  );
+  {
+    /*useRef permet de stocker la valeur de la date de fin du timer, il évite qu'on la recalcul à chaque render
+    pour l'utiliser il faudra utiliser endTimeRef.current*/
+  }
 
   useEffect(() => {
     console.log(timeLeft);
@@ -54,7 +60,7 @@ export const CreateTimer = ({ hours, minutes, seconds, onDelete }) => {
       <AddBtn onClick={onDelete}>
         <Trash2 size={24} />
       </AddBtn>
-      <p>Finish at : {endTime.toLocaleTimeString()}</p>
+      <p>Finish at : {endTimeRef.current.toLocaleTimeString()}</p>
       <div
         className="radial-progress "
         style={{ "--value": progress }}
