@@ -13,7 +13,8 @@ export const CurrentTime = () => {
   return (
     <div className="text-2xl text-center">
       <h2>Current Time</h2>
-      <p>{currentTime.toLocaleTimeString()}</p>
+      {/* suppressHydrationWarning is used to suppress the hydration warning that appears because timestamp aren't equal in server and client */}
+      <time suppressHydrationWarning>{currentTime.toLocaleTimeString()}</time>
     </div>
   );
 };
