@@ -4,6 +4,7 @@ import { Btn } from "./AddBtn";
 import { Trash2, Play, Pause, RotateCcw } from "lucide-react";
 import { ClockRunner } from "./ClockRunner";
 import { TotalDuration } from "./TotalDuration";
+import { motion, AnimatePresence } from "framer-motion";
 
 const getTotalSeconds = (hours, minutes, seconds) => {
   let totalSeconds = 0;
@@ -22,6 +23,7 @@ export const CreateTimer = ({ hours, minutes, seconds, onDelete, index }) => {
   const intervalID = useRef(null);
   const [timeLeft, setTimeLeft] = useState([hours, minutes, seconds]);
   const [active, setActive] = useState(true);
+  const [visible, setVisible] = useState(true);
 
   const totalSeconds = getTotalSeconds(hours, minutes, seconds);
   //console.log("totalSeconds", totalSeconds);
@@ -67,46 +69,70 @@ export const CreateTimer = ({ hours, minutes, seconds, onDelete, index }) => {
   //console.log("create timer render");
 
   return (
-    <div className="relative mt-2 p-2 border-2">
-      <Btn
-        onClick={() => {
-          onDelete();
-        }}
-      >
-        <Trash2 size={12} />
-      </Btn>
-      <p>{index}</p>
+    <AnimatePresence>
+      {visible && (
+        <motion.div
+          className="box"
+          initial={{ opacity: 0, scale: 0.5 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0, scale: 0.5 }}
+          transition={{
+            duration: 0.8,
+            ease: [0, 0.71, 0.2, 1.01],
+          }}
+        >
+          <div className="relative mt-2 p-2 border-2">
+            <Btn
+              onClick={() => {
+                setVisible(false);
+                console.log(visible);
+                setTimeout(() => {
+                  onDelete();
+                  console.log(visible);
+                }, 800);
+              }}
+            >
+              <Trash2 size={12} />
+            </Btn>
+            <p>{index}</p>
 
-      <ClockRunner hours={h} minutes={m} seconds={s} progress={progress}>
-        <p>Finish at : {endTimeRef.current.toLocaleTimeString()}</p>
-        <TotalDuration hours={hours} minutes={minutes} seconds={seconds} />
-      </ClockRunner>
+            <ClockRunner hours={h} minutes={m} seconds={s} progress={progress}>
+              <p>Finish at : {endTimeRef.current.toLocaleTimeString()}</p>
+              <TotalDuration
+                hours={hours}
+                minutes={minutes}
+                seconds={seconds}
+              />
+            </ClockRunner>
 
-      <Btn
-        onClick={() => {
-          setActive(!active);
-          endTimeRef.current = new Date(
-            new Date().getTime() + totalSecondsLeft * 1000
-          );
-        }}
-        className="absolute bottom-0 left-0"
-      >
-        {active ? <Pause size={12} /> : <Play size={12} />}
-      </Btn>
+            <Btn
+              onClick={() => {
+                setActive(!active);
+                endTimeRef.current = new Date(
+                  new Date().getTime() + totalSecondsLeft * 1000
+                );
+              }}
+              className="absolute bottom-0 left-0"
+            >
+              {active ? <Pause size={12} /> : <Play size={12} />}
+            </Btn>
 
-      <Btn
-        onClick={() => {
-          setTimeLeft([hours, minutes, seconds]);
-          setProgress(0);
-          setActive(true);
-          endTimeRef.current = new Date(
-            new Date().getTime() + totalSeconds * 1000
-          );
-        }}
-        className="absolute bottom-0 right-0"
-      >
-        <RotateCcw size={12} />
-      </Btn>
-    </div>
+            <Btn
+              onClick={() => {
+                setTimeLeft([hours, minutes, seconds]);
+                setProgress(0);
+                setActive(true);
+                endTimeRef.current = new Date(
+                  new Date().getTime() + totalSeconds * 1000
+                );
+              }}
+              className="absolute bottom-0 right-0"
+            >
+              <RotateCcw size={12} />
+            </Btn>
+          </div>
+        </motion.div>
+      )}
+    </AnimatePresence>
   );
 };
