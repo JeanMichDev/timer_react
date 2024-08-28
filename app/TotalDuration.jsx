@@ -1,0 +1,12 @@
+export const TotalDuration = ({ hours, minutes, seconds }) => {
+  return (
+    <div className="text-green-900">
+      <p> {hours > 0 ? `${hours} hours  ${minutes} mins ` : null}</p>
+      <p>
+        {" "}
+        {hours === 0 && minutes > 0 ? `${minutes} mins  ${seconds} sec` : null}
+      </p>
+      <p> {hours === 0 && minutes === 0 ? `${seconds} sec ` : null}</p>
+    </div>
+  );
+};

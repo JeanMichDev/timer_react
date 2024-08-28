@@ -1,4 +1,4 @@
-import { AddBtn } from "./AddBtn";
+import { Btn } from "./AddBtn";
 import { CreateTimer } from "./CreateTimer";
 import { CurrentTime } from "./CurrentTime";
 import { TimerInputElement } from "./TimerInputElement";
@@ -16,7 +16,6 @@ export const TimerInput = () => {
     let newHour = hours;
 
     if (newSec > 60) {
-      console.log("s > 60");
       const secTomin = Math.floor(newSec / 60);
       const remainingSec = newSec % 60;
       newMin = newMin + secTomin;
@@ -35,46 +34,65 @@ export const TimerInput = () => {
         hours: newHour,
         minutes: newMin,
         seconds: newSec,
+        id: Date.now().toString(),
       },
     ]);
+    setHours(null);
+    setMinutes(null);
+    setSeconds(null);
   };
 
-  const handleDelete = (index) => {
-    setTimers((prev) => (prev = timers.filter((_, i) => i !== index)));
+  const handleDelete = (id) => {
+    console.log("handleDelete", id);
+    setTimers(timers.filter((timer) => timer.id !== id));
   };
+  console.log(timers);
+  console.log("Timer input render");
 
   return (
-    <main>
+    <main className="mx-auto">
       <h1 className="text-4xl text-center">Timer</h1>
-      <CurrentTime> </CurrentTime>
+      <CurrentTime />
+
       <div className="flex flex-row items-center justify-center">
         <TimerInputElement
-          timeData="Hours"
-          value={hours}
+          unit="hours"
+          timeData="00 :"
+          value={hours ? hours : "00 :"}
           onChange={(e, curr) => (curr = setHours(Number(e.target.value)))}
+          className="border-l-2 border-l-white "
         ></TimerInputElement>
         <TimerInputElement
-          timeData="Minutes"
-          value={minutes}
+          unit="min"
+          timeData="00 :"
+          value={minutes ? minutes : "00 :"}
           onChange={(e, curr) => (curr = setMinutes(Number(e.target.value)))}
         ></TimerInputElement>
         <TimerInputElement
-          timeData="Seconds"
-          value={seconds}
+          unit="sec"
+          timeData="00"
+          value={seconds ? seconds : "00"}
           onChange={(e, curr) => (curr = setSeconds(Number(e.target.value)))}
+          className="border-r-2 border-r-white "
         ></TimerInputElement>
       </div>
-      <div>
-        <AddBtn onClick={handleClick}>Add Timer</AddBtn>
+      <div className="text-center">
+        <Btn
+          className="mt-4  bg-green-800 hover:bg-green-600"
+          onClick={handleClick}
+        >
+          Add Timer
+        </Btn>
       </div>
-      <div>
-        {timers.map((timer, index) => (
+      <div className="flex flex-row gap-2">
+        {timers.map((timer) => (
           <CreateTimer
-            key={index}
+            key={timer.id}
             hours={timer.hours}
             minutes={timer.minutes}
             seconds={timer.seconds}
-            onDelete={() => handleDelete(index)}
+            onDelete={() => handleDelete(timer.id)}
+            id={timer.id}
           ></CreateTimer>
         ))}
       </div>

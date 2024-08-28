@@ -1,13 +1,20 @@
-import React, { useState } from "react";
-
-export const TimerInputElement = ({ timeData, value, onChange }) => {
+export const TimerInputElement = ({
+  timeData,
+  value,
+  onChange,
+  unit,
+  className,
+}) => {
   return (
-    <input
-      type="number"
-      placeholder={timeData}
-      className="input w-full max-w-xs border-2 border-gray-300 rounded-lg"
-      value={value}
-      onChange={onChange}
-    />
+    <div className=" text-center text-2xl">
+      <p>{unit}</p>
+      <input
+        type="number"
+        placeholder={timeData}
+        className={`"input py-2 pr-0 w-24 bg-gray-700 text-center text-white text-4xl mt-2 border-y-2 border-y-white" ${className}`}
+        value={value}
+        onChange={onChange}
+      />
+    </div>
   );
 };

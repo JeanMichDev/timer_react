@@ -1,6 +1,5 @@
 export const updateDisplay = (timerArray) => {
   let [h, m, s] = timerArray;
-  console.log(h, m, s);
 
   if (s === 0) {
     if (m > 0) {

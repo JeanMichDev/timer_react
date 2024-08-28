@@ -1,7 +1,9 @@
-import { useEffect, useRef, useState, memo } from "react";
+import { useEffect, useRef, useState } from "react";
 import { updateDisplay } from "./functions/updateDisplay";
-import { AddBtn } from "./AddBtn";
-import { Trash2 } from "lucide-react";
+import { Btn } from "./AddBtn";
+import { Trash2, Play, Pause, RotateCcw } from "lucide-react";
+import { ClockRunner } from "./ClockRunner";
+import { TotalDuration } from "./TotalDuration";
 
 const getTotalSeconds = (hours, minutes, seconds) => {
   let totalSeconds = 0;
@@ -11,7 +13,7 @@ const getTotalSeconds = (hours, minutes, seconds) => {
   return totalSeconds;
 };
 
-export const CreateTimer = ({ hours, minutes, seconds, onDelete }) => {
+export const CreateTimer = ({ hours, minutes, seconds, onDelete, index }) => {
   hours = hours ?? 0;
   minutes = minutes ?? 0;
   seconds = seconds ?? 0;
@@ -22,6 +24,12 @@ export const CreateTimer = ({ hours, minutes, seconds, onDelete }) => {
   const [active, setActive] = useState(true);
 
   const totalSeconds = getTotalSeconds(hours, minutes, seconds);
+  //console.log("totalSeconds", totalSeconds);
+
+  //console.log(timeLeft);
+  const totalSecondsLeft = getTotalSeconds(...timeLeft);
+  //console.log("totalSecondsLeft", totalSecondsLeft);
+
   const onePointProgress = 100 / totalSeconds;
 
   const endTimeRef = useRef(
@@ -33,10 +41,10 @@ export const CreateTimer = ({ hours, minutes, seconds, onDelete }) => {
   }
 
   useEffect(() => {
-    console.log(timeLeft);
     if (!active) return;
+    //console.log("run efect");
     intervalID.current = setInterval(() => {
-      setTimeLeft(updateDisplay(timeLeft));
+      setTimeLeft((currTimeLeft) => updateDisplay(currTimeLeft));
       setProgress((curr) => {
         const newProgress = curr + onePointProgress;
         if (newProgress >= 100) {
@@ -48,49 +56,57 @@ export const CreateTimer = ({ hours, minutes, seconds, onDelete }) => {
       });
     }, 1000);
     return () => {
-      console.log("clean");
+      //console.log("clear interval");
       clearInterval(intervalID.current);
     };
-  }, [active, onePointProgress, timeLeft, progress]);
+  }, [active]);
 
-  const [h, m, s] = timeLeft;
+  //console.log("time left 2", timeLeft);
+  let [h, m, s] = timeLeft;
+
+  //console.log("create timer render");
 
   return (
-    <div className="p-5 border-5 bg-red-400 w-1/4">
-      <AddBtn onClick={onDelete}>
-        <Trash2 size={24} />
-      </AddBtn>
-      <p>Finish at : {endTimeRef.current.toLocaleTimeString()}</p>
-      <div
-        className="radial-progress "
-        style={{ "--value": progress }}
-        role="progressbar"
-      >
-        {Math.floor(h)} : {Math.floor(m)} : {Math.floor(s)}
-      </div>
-      <AddBtn onClick={() => clearInterval(intervalID.current)}>Stop</AddBtn>
-      <AddBtn onClick={() => setActive(!active)}>
-        {active ? "Pause" : "Run"}
-      </AddBtn>
-      <AddBtn
+    <div className="relative mt-2 p-2 border-2">
+      <Btn
         onClick={() => {
-          setTimeLeft((prev) => (prev = [hours, minutes, seconds]));
-          setProgress(0);
-          setActive(true);
+          onDelete();
         }}
       >
-        Reset
-      </AddBtn>
-      <div className="bg-red-700">
-        <p> {hours > 0 ? `${hours} hours and ${minutes} minutes` : null}</p>
-        <p>
-          {" "}
-          {hours === 0 && minutes > 0
-            ? `${minutes} minutes and ${seconds} secondes`
-            : null}
-        </p>
-        <p> {hours === 0 && minutes === 0 ? `${seconds} seconds ` : null}</p>
-      </div>
+        <Trash2 size={12} />
+      </Btn>
+      <p>{index}</p>
+
+      <ClockRunner hours={h} minutes={m} seconds={s} progress={progress}>
+        <p>Finish at : {endTimeRef.current.toLocaleTimeString()}</p>
+        <TotalDuration hours={hours} minutes={minutes} seconds={seconds} />
+      </ClockRunner>
+
+      <Btn
+        onClick={() => {
+          setActive(!active);
+          endTimeRef.current = new Date(
+            new Date().getTime() + totalSecondsLeft * 1000
+          );
+        }}
+        className="absolute bottom-0 left-0"
+      >
+        {active ? <Pause size={12} /> : <Play size={12} />}
+      </Btn>
+
+      <Btn
+        onClick={() => {
+          setTimeLeft([hours, minutes, seconds]);
+          setProgress(0);
+          setActive(true);
+          endTimeRef.current = new Date(
+            new Date().getTime() + totalSeconds * 1000
+          );
+        }}
+        className="absolute bottom-0 right-0"
+      >
+        <RotateCcw size={12} />
+      </Btn>
     </div>
   );
 };
