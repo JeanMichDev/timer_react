@@ -1,13 +1,17 @@
 import { getTimeText } from "./functions/getTimeText";
+import { handleFireworks } from "./functions/handleFireworks";
 
 export const ClockRunner = ({
   hours,
-
   minutes,
   seconds,
   progress,
   children,
+  isActive,
 }) => {
+  if (hours === 0 && minutes === 0 && seconds === 0 && isActive === true)
+    handleFireworks();
+
   return (
     //utilisation de https://daisyui.com/components/radial-progress/ pour générer le cercle de progression
     <div

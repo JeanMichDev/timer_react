@@ -6,3 +6,17 @@ html,
 body {
   height: 100%;
 }
+
+/* Pour les navigateurs basés sur WebKit (Chrome, Safari, etc.) 
+Pour enlever les flèches dans les inputs number*/
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Pour Firefox */
+input[type="number"] {
+  appearance: textfield;
+  -moz-appearance: textfield;
+}

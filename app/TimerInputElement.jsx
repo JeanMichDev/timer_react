@@ -11,7 +11,7 @@ export const TimerInputElement = ({
       <input
         type="number"
         placeholder={timeData}
-        className={`"input py-2 pr-0 w-24 bg-gray-700 text-center text-white text-4xl mt-2 border-y-2 border-y-white" ${className}`}
+        className={` py-2 pr-0 w-24 bg-gray-700 text-center text-white text-4xl mt-2 border-y-2 border-y-white ${className}`}
         value={value}
         onChange={onChange}
       />

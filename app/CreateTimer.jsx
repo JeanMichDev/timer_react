@@ -5,14 +5,8 @@ import { Trash2, Play, Pause, RotateCcw } from "lucide-react";
 import { ClockRunner } from "./ClockRunner";
 import { TotalDuration } from "./TotalDuration";
 import { motion, AnimatePresence } from "framer-motion";
-
-const getTotalSeconds = (hours, minutes, seconds) => {
-  let totalSeconds = 0;
-  if (hours) totalSeconds += hours * 3600;
-  if (minutes) totalSeconds += minutes * 60;
-  if (seconds) totalSeconds += seconds;
-  return totalSeconds;
-};
+import { handleFireworks } from "./functions/handleFireworks";
+import { getTotalSeconds } from "./functions/getTotalSeconds";
 
 export const CreateTimer = ({
   hours,
@@ -57,7 +51,7 @@ export const CreateTimer = ({
         const newProgress = curr + onePointProgress;
         if (newProgress >= 100) {
           clearInterval(intervalID.current);
-          setActive(false);
+          setTimeout(() => setActive(false), 500); //pour pouvoir lancer le feu d'artifice
           return 100;
         }
         return newProgress;
@@ -70,7 +64,7 @@ export const CreateTimer = ({
   }, [active]);
 
   //console.log("time left 2", timeLeft);
-  let [h, m, s] = timeLeft;
+  const [h, m, s] = timeLeft;
 
   //console.log("create timer render");
 
@@ -83,7 +77,7 @@ export const CreateTimer = ({
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0, scale: 0.5 }}
           transition={{
-            duration: 0.8,
+            duration: 0.2,
             ease: [0, 0.71, 0.2, 1.01],
           }}
         >
@@ -101,7 +95,13 @@ export const CreateTimer = ({
               <Trash2 size={12} />
             </Btn>
 
-            <ClockRunner hours={h} minutes={m} seconds={s} progress={progress}>
+            <ClockRunner
+              hours={h}
+              minutes={m}
+              seconds={s}
+              progress={progress}
+              isActive={active}
+            >
               <p>Finish at : {endTimeRef.current.toLocaleTimeString()}</p>
               <TotalDuration
                 hours={hours}

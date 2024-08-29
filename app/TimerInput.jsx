@@ -3,7 +3,8 @@ import { CreateTimer } from "./CreateTimer";
 import { CurrentTime } from "./CurrentTime";
 import { TimerInputElement } from "./TimerInputElement";
 import React, { useEffect, useState } from "react";
-import Image from "next/image";
+
+import { SeparationTimer } from "./SeparationTimer";
 
 export const TimerInput = ({ className }) => {
   const [hours, setHours] = useState(null);
@@ -52,26 +53,26 @@ export const TimerInput = ({ className }) => {
 
   return (
     <>
-      <main
-        className={`mx-auto ${className} overflow-visible  border-red-500 border-2 `}
-      >
-        <h1 className="text-4xl text-center">Timer</h1>
+      <main className={`mx-auto text-white ${className}  `}>
+        <h1 className="text-4xl text-center mt-5">Timer</h1>
         <CurrentTime />
 
         <div className="flex flex-row items-center justify-center">
           <TimerInputElement
             unit="hours"
-            timeData="00 :"
-            value={hours ? hours : "00 :"}
+            timeData="00"
+            value={hours ? hours : "00"}
             onChange={(e, curr) => (curr = setHours(Number(e.target.value)))}
-            className="border-l-2 border-l-white "
+            className="border-l-2 border-l-white text-white"
           ></TimerInputElement>
+          <SeparationTimer>:</SeparationTimer>
           <TimerInputElement
             unit="min"
-            timeData="00 :"
-            value={minutes ? minutes : "00 :"}
+            timeData="00"
+            value={minutes ? minutes : "00"}
             onChange={(e, curr) => (curr = setMinutes(Number(e.target.value)))}
           ></TimerInputElement>
+          <SeparationTimer>:</SeparationTimer>
           <TimerInputElement
             unit="sec"
             timeData="00"
@@ -84,11 +85,12 @@ export const TimerInput = ({ className }) => {
           <Btn
             className="mt-4  bg-green-800 hover:bg-green-600"
             onClick={handleClick}
+            fireworks={true}
           >
             Add Timer
           </Btn>
         </div>
-        <div className="flex flex-wrap border-2 border-green-400 mt-5 absolute left-5 right-5 justify-center">
+        <div className="flex flex-wrap mt-5 absolute left-5 right-5 justify-center">
           {timers.map((timer) => (
             <CreateTimer
               key={timer.id}
