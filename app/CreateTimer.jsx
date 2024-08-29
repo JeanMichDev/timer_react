@@ -14,7 +14,13 @@ const getTotalSeconds = (hours, minutes, seconds) => {
   return totalSeconds;
 };
 
-export const CreateTimer = ({ hours, minutes, seconds, onDelete, index }) => {
+export const CreateTimer = ({
+  hours,
+  minutes,
+  seconds,
+  onDelete,
+  className,
+}) => {
   hours = hours ?? 0;
   minutes = minutes ?? 0;
   seconds = seconds ?? 0;
@@ -81,7 +87,7 @@ export const CreateTimer = ({ hours, minutes, seconds, onDelete, index }) => {
             ease: [0, 0.71, 0.2, 1.01],
           }}
         >
-          <div className="relative mt-2 p-2 border-2">
+          <div className={`relative mt-2 p-2 border-2 ${className}`}>
             <Btn
               onClick={() => {
                 setVisible(false);
@@ -94,7 +100,6 @@ export const CreateTimer = ({ hours, minutes, seconds, onDelete, index }) => {
             >
               <Trash2 size={12} />
             </Btn>
-            <p>{index}</p>
 
             <ClockRunner hours={h} minutes={m} seconds={s} progress={progress}>
               <p>Finish at : {endTimeRef.current.toLocaleTimeString()}</p>
