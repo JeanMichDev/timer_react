@@ -54,7 +54,7 @@ export const TimerInput = ({ className }) => {
   return (
     <>
       <main className={`mx-auto text-white ${className}  `}>
-        <h1 className="text-4xl text-center mt-5">Timer</h1>
+        <h1 className="text-4xl text-center mt-5">What year are we?</h1>
         <CurrentTime />
 
         <div className="flex flex-row items-center justify-center">
@@ -62,7 +62,7 @@ export const TimerInput = ({ className }) => {
             unit="hours"
             timeData="00"
             value={hours ? hours : "00"}
-            onChange={(e, curr) => (curr = setHours(Number(e.target.value)))}
+            onChange={(e) => setHours(Number(e.target.value))}
             className="border-l-2 border-l-white text-white"
           ></TimerInputElement>
           <SeparationTimer>:</SeparationTimer>

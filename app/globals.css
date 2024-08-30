@@ -20,3 +20,17 @@ input[type="number"] {
   appearance: textfield;
   -moz-appearance: textfield;
 }
+
+/* Pour faire tourner une image sur elle-même à l'infini */
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.hover\:animate-spin:hover {
+  animation: spin 1s linear infinite;
+}
