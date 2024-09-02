@@ -1,5 +1,6 @@
 import { getTimeText } from "./functions/getTimeText";
 import { handleFireworks } from "./functions/handleFireworks";
+import { playSound } from "./functions/playSound";
 
 export const ClockRunner = ({
   hours,
@@ -9,8 +10,10 @@ export const ClockRunner = ({
   children,
   isActive,
 }) => {
-  if (hours === 0 && minutes === 0 && seconds === 0 && isActive === true)
+  if (hours === 0 && minutes === 0 && seconds === 0 && isActive === true) {
     handleFireworks();
+    playSound("/sounds/ring.mp3");
+  }
 
   return (
     //utilisation de https://daisyui.com/components/radial-progress/ pour générer le cercle de progression
