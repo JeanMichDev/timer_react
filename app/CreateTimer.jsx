@@ -43,7 +43,7 @@ export const CreateTimer = ({
         const newProgress = curr + onePointProgress;
         if (newProgress >= 100) {
           clearInterval(intervalID.current);
-          setTimeout(() => setActive(false), 500); //pour pouvoir lancer le feu d'artifice
+          setTimeout(() => setActive(false), 10); //pour pouvoir lancer le feu d'artifice
           return 100;
         }
         return newProgress;

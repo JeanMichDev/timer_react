@@ -1,6 +1,7 @@
 import { getTimeText } from "./functions/getTimeText";
 import { handleFireworks } from "./functions/handleFireworks";
 import { playSound } from "./functions/playSound";
+import { useEffect } from "react";
 
 export const ClockRunner = ({
   hours,
@@ -10,10 +11,22 @@ export const ClockRunner = ({
   children,
   isActive,
 }) => {
-  if (hours === 0 && minutes === 0 && seconds === 0 && isActive === true) {
-    handleFireworks();
-    playSound("/sounds/ring.mp3");
-  }
+  useEffect(() => {
+    if (hours === 0 && minutes === 0 && seconds === 0 && isActive) {
+      handleFireworks();
+      playSound("/sounds/ring.mp3");
+      console.log(Notification.permission);
+
+      if (Notification.permission === "granted") {
+        const notification = new Notification("Finish!", {
+          body: "Time's up!",
+        });
+        console.log("Notification sent:", notification);
+      } else {
+        console.log("Notification permission not granted.");
+      }
+    }
+  }, [hours, minutes, seconds, isActive]);
 
   return (
     //utilisation de https://daisyui.com/components/radial-progress/ pour générer le cercle de progression

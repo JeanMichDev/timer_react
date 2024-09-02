@@ -14,6 +14,15 @@ export const TimerInputElement = ({
     if (e.target.value === "") {
       e.target.value = "00";
     }
+    if (e.target.value.length === 1) {
+      e.target.value = "0" + e.target.value;
+    }
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      e.target.blur();
+    }
   };
 
   return (
@@ -27,6 +36,7 @@ export const TimerInputElement = ({
         onChange={onChange}
         onFocus={handleFocus}
         onBlur={handleBlur}
+        onKeyDown={handleKeyDown}
       />
     </div>
   );

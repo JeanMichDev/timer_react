@@ -4,8 +4,18 @@ import { TimerInput } from "./TimerInput";
 import Image from "next/image";
 import dali from "../public/images/persistenceTime.jpg";
 import pinkfloyd from "../public/images/pinkfloyd.jpg";
+import { useEffect } from "react";
 
 export default function Home() {
+  // Demande la permission pour les notifications une seule fois lors du montage du composant
+  useEffect(() => {
+    if (Notification.permission !== "granted") {
+      Notification.requestPermission().then((permission) => {
+        console.log("Notification permission status:", permission);
+      });
+    }
+  }, []);
+
   return (
     <main className=" flex flex-row min-h-screen bg-custom-radial">
       <div className=" flex-auto justify-center items-center relative w-[15rem] h-[15rem] mr-5 ">

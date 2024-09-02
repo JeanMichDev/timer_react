@@ -75,14 +75,14 @@ export const TimerInput = ({ className }) => {
             unit="min"
             timeData="00"
             value={minutes ? minutes : "00"}
-            onChange={(e, curr) => (curr = setMinutes(Number(e.target.value)))}
+            onChange={(e) => setMinutes(Number(e.target.value))}
           ></TimerInputElement>
           <SeparationTimer>:</SeparationTimer>
           <TimerInputElement
             unit="sec"
             timeData="00"
             value={seconds ? seconds : "00"}
-            onChange={(e, curr) => (curr = setSeconds(Number(e.target.value)))}
+            onChange={(e) => setSeconds(Number(e.target.value))}
             className="border-r-2 border-r-white "
           ></TimerInputElement>
         </div>
