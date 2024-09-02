@@ -13,6 +13,11 @@ export const TimerInput = ({ className }) => {
   const [timers, setTimers] = useState([]);
 
   const handleClick = () => {
+    if (!hours && !minutes && !seconds) {
+      alert("Please enter at least 1 sec");
+      return;
+    }
+
     let newSec = seconds;
     let newMin = minutes;
     let newHour = hours;
@@ -82,15 +87,11 @@ export const TimerInput = ({ className }) => {
           ></TimerInputElement>
         </div>
         <div className="text-center">
-          <Btn
-            className="mt-4  bg-green-800 hover:bg-green-600"
-            onClick={handleClick}
-            fireworks={true}
-          >
+          <Btn className="mt-4 text-gray-700" onClick={handleClick}>
             Add Timer
           </Btn>
         </div>
-        <div className="flex flex-wrap mt-5 absolute left-5 right-5 justify-center">
+        <div className="flex flex-wrap mt-5 absolute left-5 right-5 justify-center gap-2">
           {timers.map((timer) => (
             <CreateTimer
               key={timer.id}

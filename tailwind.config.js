@@ -14,6 +14,9 @@ module.exports = {
         "custom-radial":
           "radial-gradient(circle 550px at 50% 80%, rgba(62,147,252,0.77) 24%, rgba(239,183,192,0.64) 91.2%)",
       },
+      colors: {
+        "custom-blue": "rgba(62,147,252,0.77)", // permet d'ajouter une couleur personnalisée RGBA à Tailwind
+      },
     },
   },
   daisyui: {

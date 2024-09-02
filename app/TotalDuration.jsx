@@ -1,6 +1,6 @@
 export const TotalDuration = ({ hours, minutes, seconds }) => {
   return (
-    <div className="text-green-900">
+    <div className="italic">
       <p> {hours > 0 ? `${hours} hours  ${minutes} mins ` : null}</p>
       <p>
         {" "}

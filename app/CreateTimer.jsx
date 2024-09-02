@@ -5,7 +5,6 @@ import { Trash2, Play, Pause, RotateCcw } from "lucide-react";
 import { ClockRunner } from "./ClockRunner";
 import { TotalDuration } from "./TotalDuration";
 import { motion, AnimatePresence } from "framer-motion";
-import { handleFireworks } from "./functions/handleFireworks";
 import { getTotalSeconds } from "./functions/getTotalSeconds";
 
 export const CreateTimer = ({
@@ -26,25 +25,18 @@ export const CreateTimer = ({
   const [visible, setVisible] = useState(true);
 
   const totalSeconds = getTotalSeconds(hours, minutes, seconds);
-  //console.log("totalSeconds", totalSeconds);
-
-  //console.log(timeLeft);
   const totalSecondsLeft = getTotalSeconds(...timeLeft);
-  //console.log("totalSecondsLeft", totalSecondsLeft);
-
   const onePointProgress = 100 / totalSeconds;
 
+  /*useRef permet de stocker la valeur de la date de fin du timer, il évite qu'on la recalcul à chaque render
+    pour l'utiliser il faudra utiliser endTimeRef.current*/
   const endTimeRef = useRef(
     new Date(new Date().getTime() + totalSeconds * 1000)
   );
-  {
-    /*useRef permet de stocker la valeur de la date de fin du timer, il évite qu'on la recalcul à chaque render
-    pour l'utiliser il faudra utiliser endTimeRef.current*/
-  }
 
   useEffect(() => {
     if (!active) return;
-    //console.log("run efect");
+
     intervalID.current = setInterval(() => {
       setTimeLeft((currTimeLeft) => updateDisplay(currTimeLeft));
       setProgress((curr) => {
@@ -63,10 +55,7 @@ export const CreateTimer = ({
     };
   }, [active]);
 
-  //console.log("time left 2", timeLeft);
   const [h, m, s] = timeLeft;
-
-  //console.log("create timer render");
 
   return (
     <AnimatePresence>
@@ -81,16 +70,18 @@ export const CreateTimer = ({
             ease: [0, 0.71, 0.2, 1.01],
           }}
         >
-          <div className={`relative mt-2 p-2 border-2 ${className}`}>
+          <div
+            className={`relative mt-2 p-2 border-2 border-gray-700 rounded-lg ${className}`}
+          >
             <Btn
               onClick={() => {
                 setVisible(false);
-                console.log(visible);
+
                 setTimeout(() => {
                   onDelete();
-                  console.log(visible);
                 }, 800);
               }}
+              className="absolute top-1 left-1"
             >
               <Trash2 size={12} />
             </Btn>
@@ -117,7 +108,7 @@ export const CreateTimer = ({
                   new Date().getTime() + totalSecondsLeft * 1000
                 );
               }}
-              className="absolute bottom-0 left-0"
+              className="absolute bottom-1 left-1"
             >
               {active ? <Pause size={12} /> : <Play size={12} />}
             </Btn>
@@ -131,7 +122,7 @@ export const CreateTimer = ({
                   new Date().getTime() + totalSeconds * 1000
                 );
               }}
-              className="absolute bottom-0 right-0"
+              className="absolute bottom-1 right-1"
             >
               <RotateCcw size={12} />
             </Btn>
