@@ -1,8 +1,8 @@
 import { Btn } from "./AddBtn";
-import { CreateTimer } from "./CreateTimer";
 import { CurrentTime } from "./CurrentTime";
 import { TimerInputElement } from "./TimerInputElement";
 import React, { useEffect, useState } from "react";
+import { CreateTimer } from "./CreateTimer";
 
 import { SeparationTimer } from "./SeparationTimer";
 
@@ -50,18 +50,15 @@ export const TimerInput = ({ className }) => {
   };
 
   const handleDelete = (id) => {
-    console.log("handleDelete", id);
-    setTimers(timers.filter((timer) => timer.id !== id));
+    const newTimers = timers.filter((timer) => timer.id !== id);
+    setTimers(newTimers);
   };
-  console.log(timers);
-  console.log("Timer input render");
 
   return (
     <>
-      <main className={`mx-auto text-white ${className}  `}>
+      <main className={`mx-auto min-h-full  ${className}  `}>
         <h1 className="text-4xl text-center mt-5">What year are we?</h1>
         <CurrentTime />
-
         <div className="flex flex-row items-center justify-center">
           <TimerInputElement
             unit="hours"
@@ -91,7 +88,8 @@ export const TimerInput = ({ className }) => {
             Add Timer
           </Btn>
         </div>
-        <div className="flex flex-wrap mt-5 absolute left-5 right-5 justify-center gap-2">
+
+        <div className=" flex flex-wrap justify-center item-center gap-2  w-screen absolute left-0 ">
           {timers.map((timer) => (
             <CreateTimer
               key={timer.id}

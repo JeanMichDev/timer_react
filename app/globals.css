@@ -4,7 +4,11 @@
 
 html,
 body {
-  height: 100%;
+  min-height: 100%;
+  width: 100%;
+}
+body {
+  @apply bg-custom-radial; /* @apply permet d'appliquer des classes tailwindcss */
 }
 
 /* Pour les navigateurs basés sur WebKit (Chrome, Safari, etc.) 

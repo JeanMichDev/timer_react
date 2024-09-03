@@ -17,26 +17,28 @@ export default function Home() {
   }, []);
 
   return (
-    <main className=" flex flex-row min-h-screen bg-custom-radial">
-      <div className=" flex-auto justify-center items-center relative w-[15rem] h-[15rem] mr-5 ">
-        <div className="mx-auto mt-5 w-[15rem] h-[15rem]  rounded-lg shadow-[0_0_30px_25px_rgba(255,255,255,0.8)] hover:animate-spin">
-          <Image
-            src={pinkfloyd}
-            alt="Pink Floyd"
-            // layout="fill"
-            className=" rounded-lg "
-          />
+    <main className=" min-h-screen min-w-screen bg-custom-radial">
+      <div className="flex flex-row ">
+        <div className=" flex-1 justify-center items-center mr-5 ">
+          <div className="mx-auto mt-5 w-1/2 rounded-lg shadow-[0_0_30px_25px_rgba(255,255,255,0.8)] hover:animate-spin">
+            <Image
+              src={pinkfloyd}
+              alt="Pink Floyd"
+              // layout="fill"
+              className=" rounded-lg "
+            />
+          </div>
         </div>
-      </div>
-      <TimerInput />
-      <div className="flex-auto justify-center items-center  w-[15rem] h-[15rem] ml-5">
-        <div className="mx-auto mt-5 w-[20rem] rounded-lg shadow-[0_0_30px_25px_rgba(255,255,255,0.8)] hover:animate-spin">
-          <Image
-            src={dali}
-            alt="Dali"
-            // layout="fill"
-            className=" rounded-lg  "
-          />
+        <TimerInput className="flex-1" />
+        <div className="flex-1 justify-center items-center  ml-5">
+          <div className="mx-auto mt-5 w-1/2 rounded-lg shadow-[0_0_30px_25px_rgba(255,255,255,0.8)] hover:animate-spin">
+            <Image
+              src={dali}
+              alt="Dali"
+              // layout="fill"
+              className=" rounded-lg  "
+            />
+          </div>
         </div>
       </div>
     </main>
